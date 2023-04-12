@@ -399,11 +399,12 @@ auto dis = [&](int x, int y) {
 ## Sieve
 
 ```cpp
-constexpr int N = 1E7;
-vector<int> isprime(N + 1, 1);
+vector<int> isprime;
 vector<int> primes;
 
-void sieve() {
+void sieve(int N) {
+    isprime.assign(N + 1, 1);
+    
     for (int i = 2; i <= N; i++) {
         if (isprime[i]) {
             primes.push_back(i);
