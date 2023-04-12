@@ -29,9 +29,9 @@ freopen("out.txt", "w", stdout);
 ```cpp
 i64 exgcd(i64 a, i64 b, i64 &x, i64 &y) {
     if (!b) {
-    	x = 1;
-    	y = 0;
-    	return a;
+    	    x = 1;
+    	    y = 0;
+    	    return a;
   	}
   	i64 d = exgcd(b, a % b, x, y);
   	i64 t = x;
@@ -253,15 +253,15 @@ struct SparseTable {
     int n;
     function<T(const T&, const T&)> func;
     vector<vector<T>> st;
-  	SparseTable(const vector<T> &a, const function<T(const T&, const T&)> &f) : n(a.size()), func(f), st(__lg(n) + 1, vector<T>(n)) {
+    SparseTable(const vector<T> &a, const function<T(const T&, const T&)> &f) : n(a.size()), func(f), st(__lg(n) + 1, vector<T>(n)) {
         st[0] = a;
-        int lg = __lg(n);
-        for (int i = 1; i <= lg; i++) {
-            for (int j = 0; j <= n - (1 << i); j++) {
-                st[i][j] = func(st[i - 1][j], st[i - 1][(1 << (i - 1)) + j]);
-            }
-        }  	    
-  	}
+	int lg = __lg(n);
+	for (int i = 1; i <= lg; i++) {
+	    for (int j = 0; j <= n - (1 << i); j++) {
+	        st[i][j] = func(st[i - 1][j], st[i - 1][(1 << (i - 1)) + j]);
+	    }
+	}  	    
+    }
     T get(int l, int r) {// [l, r)
     	int lg = __lg(r - l);
     	return func(st[lg][l], st[lg][r - (1 << lg)]);
@@ -273,28 +273,28 @@ struct SparseTable {
 
 ```cpp
 struct UnionFind {
-  	int n;
-  	vector<int> f;
-  	UnionFind(const int &n) : n(n), f(n) { 
-    	iota(f.begin(), f.end(), 0); 
-  	}
-  	int get(int x) {
+    int n;
+    vector<int> f;
+    UnionFind(const int &n) : n(n), f(n) { 
+        iota(f.begin(), f.end(), 0); 
+    }
+    int get(int x) {
     	while (x != f[x]) {
-      		x = f[x] = f[f[x]];
+      	    x = f[x] = f[f[x]];
     	}
     	return x;
-  	}
-  	bool unite(int x, int y) {
+    }
+    bool unite(int x, int y) {
     	int gx = get(x), gy = get(y);
     	if (gx != gy) {
-      		f[gx] = gy;
-      		return 1;
+      	    f[gx] = gy;
+      	    return 1;
     	}
     	return 0;
-  	}
+    }
     bool united(int x, int y) {
     	return get(x) == get(y);
-  	}
+    }
 };
 ```
 
@@ -445,30 +445,30 @@ vector<int> get(int x) {
 
 ```cpp
 auto getroot = [&]() {
-  	int root1 = 0, root2 = 0;
-  	vector<i64> sz(n + 1), mx(n + 1); // 注意！注意！
-  	mx[0] = 2E9;
-  	function<void(int, int)> dfs = [&](int cur, int pre) {
-    	sz[cur] = 1;
+    int root1 = 0, root2 = 0;
+    vector<i64> sz(n + 1), mx(n + 1); // 注意！注意！
+    mx[0] = 2E9;
+    function<void(int, int)> dfs = [&](int cur, int pre) {
+        sz[cur] = 1;
     	mx[cur] = 0;
     	for (auto nex : g[cur]) {
-      		if (nex != pre) {
-        		dfs(nex, cur);
-        		sz[cur] += sz[nex];
-        		mx[cur] = max(mx[cur], sz[nex]);
-      		}
+      	    if (nex != pre) {
+        	dfs(nex, cur);
+        	sz[cur] += sz[nex];
+        	mx[cur] = max(mx[cur], sz[nex]);
+      	    }
     	}
     	mx[cur] = max(mx[cur], n - sz[cur]);
     	if (mx[cur] == mx[root1]) {
-      		root2 = cur;
+      	    root2 = cur;
     	}
     	if (mx[cur] < mx[root1]) {
-      		root1 = cur;
-      		root2 = 0;
+      	    root1 = cur;
+      	    root2 = 0;
     	}
-  	};
-  	dfs(1, 0);
-  	return (pair<int, int>){root1, root2};
+    };
+    dfs(1, 0);
+    return (pair<int, int>){root1, root2};
 };
 ```
 
@@ -484,27 +484,27 @@ using Hash = pair<i64, i64>;
 #define y second
 
 auto TreeHash = [&](int root) {
-  	vector<i64> sz(n + 1); // 注意！注意！
-  	function<Hash(int, int)> dfs = [&](int cur, int pre) {
-    	Hash res;
-    	sz[cur] = 1;
-    	vector<Hash> s;
-    	for (auto nex : g[cur]) {
-      		if (nex != pre) {
-        		s.push_back(dfs(nex, cur));
-        		sz[cur] += sz[nex];
-      		}
-    	}
-    	sort(s.begin(), s.end());
-    	for (auto si : s) {
-      		res.x = (res.x * p[0] + si.x) % mod[0];
-      		res.y = (res.y * p[1] + si.y) % mod[1];
-    	}
-    	res.x = (res.x * p[0] + sz[cur]) % mod[0];
-    	res.y = (res.y * p[1] + sz[cur]) % mod[1];
-    	return res;
-  	};   
-  	return dfs(root, 0);
+    vector<i64> sz(n + 1); // 注意！注意！
+    function<Hash(int, int)> dfs = [&](int cur, int pre) {
+        Hash res;
+        sz[cur] = 1;
+        vector<Hash> s;
+        for (auto nex : g[cur]) {
+      	    if (nex != pre) {
+                s.push_back(dfs(nex, cur));
+                sz[cur] += sz[nex];
+      	    }
+        }
+        sort(s.begin(), s.end());
+        for (auto si : s) {
+      	    res.x = (res.x * p[0] + si.x) % mod[0];
+      	    res.y = (res.y * p[1] + si.y) % mod[1];
+        }
+        res.x = (res.x * p[0] + sz[cur]) % mod[0];
+        res.y = (res.y * p[1] + sz[cur]) % mod[1];
+        return res;
+    };   
+    return dfs(root, 0);
 };     
 ```
 
@@ -513,15 +513,15 @@ auto TreeHash = [&](int root) {
 ```cpp
 template <typename T, typename U> 
 T POW(T a, U b) {
-  	T res = 1;
-  	while (b) {
-    	if (b & 1) {
-      		res = res * a;
+    T res = 1;
+    while (b) {
+        if (b & 1) {
+      	    res = res * a;
     	}
-    	a = a * a;
+        a = a * a;
     	b >>= 1;
-  	}
-  	return res;
+    }
+    return res;
 }
 
 template <int M>
@@ -614,14 +614,14 @@ vector<mint> fac(1, 1);
 vector<mint> ifac(1, 1);
 
 mint C(int n, int m) {
-  	if (m < 0 || m > n) {
-    	return 0;
-  	}
-  	while ((int) fac.size() < n + 1) {
+    if (m < 0 || m > n) {
+        return 0;
+    }
+    while ((int) fac.size() < n + 1) {
     	fac.push_back(fac.back() * (int) fac.size());
     	ifac.push_back(fac.back().inv());
-  	}
-  	return fac[n] * ifac[m] * ifac[n - m];
+    }
+    return fac[n] * ifac[m] * ifac[n - m];
 }
 ```
 
@@ -678,12 +678,12 @@ for (int i = 0; i < m; i++) {
 vector<vector<int>> g(n);
 vector<int> dep(n, 1), cnt(n);
 function<void(int, int)> dfs = [&](int cur, int pre) {
-	cnt[cur]++;
+    cnt[cur]++;
     for (auto &nex : g[cur]) {
     	if (x != pre) {
-        	dep[nex] = dep[cur] + 1;
-        	dfs(nex, cur);
-        	cnt[cur] += cnt[nex];
+            dep[nex] = dep[cur] + 1;
+            dfs(nex, cur);
+            cnt[cur] += cnt[nex];
       	}
     }
 };
@@ -698,13 +698,13 @@ using i128 = __int128;
 constexpr i64 N = 1E18;
  
 void print(i128 x) {
-  	i64 num1 = x / N;
-  	i64 num2 = x % N;
-  	if (x <= N) {
+    i64 num1 = x / N;
+    i64 num2 = x % N;
+    if (x <= N) {
     	cout << (i64) x;
     	return;
-  	}
-  	cout << num1 << setw(18) << setfill('0') << num2;
+    }
+    cout << num1 << setw(18) << setfill('0') << num2;
 }
 ```
 
@@ -726,10 +726,10 @@ mp.max_load_factor(0.25);
 
 ```cpp
 auto dijkstra = [&](int s, int t) {
-	vector<int> vis(n);
-	vector<int> dis(n, 1E9);
-	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q;    
-	dis[s] = 0;
+    vector<int> vis(n);
+    vector<int> dis(n, 1E9);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q;    
+    dis[s] = 0;
     q.push({dis[s], s});
     while (!q.empty()) {
         auto [u, v] = q.top();
@@ -787,17 +787,17 @@ int r = bfs(l);
 vector<int> nex(n + 1);
 int j = 0;
 for (int i = 1; i < n; i++) {
-	while (j && s[i] != s[j]) {
-    	j = nex[j];
+    while (j && s[i] != s[j]) {
+        j = nex[j];
     }
     if (s[i] == s[j]) {
         j++;
-     }
-     nex[i + 1] = j;
+    }
+    nex[i + 1] = j;
 }
 int ans = n;
 if (n - nex[n] > 0 && (n % (n - nex[n]) == 0)) {
-	ans = n - nex[n];
+    ans = n - nex[n];
 }
 ```
 
@@ -819,7 +819,7 @@ int sign(const Real &x) {
 }
 
 bool equal(const Real &a, const Real &b) {
-  	return sign(a - b) == 0;
+    return sign(a - b) == 0;
 }
 
 const Real inf = numeric_limits<Real>::max();
@@ -840,8 +840,8 @@ struct Segment : Line {
 
 // a -> b
 struct Ray : Line {
-  	Ray() = default;
-  	using Line::Line;
+    Ray() = default;
+    using Line::Line;
 };
 
 struct Circle {
@@ -859,7 +859,7 @@ Real dot(const Point &a, const Point &b) {
 }
 
 Real area(const Point &a, const Point &b, const Point &c) {
-  return abs(cross(b - a, c - a));
+    return abs(cross(b - a, c - a));
 }
 
 Point rotate(const Point &p, const double &rad) {
@@ -880,12 +880,12 @@ Real dist(const Point &a, const Point &b) {
 }
 
 Real dist(const Point &p, const Line &l) {
-  	return fabs(cross(p - l.a, l.b - l.a)) / dist(l.a, l.b);
+    return fabs(cross(p - l.a, l.b - l.a)) / dist(l.a, l.b);
 }
 
 // 1 -> 点在左侧 -1 -> 点在右侧
 int onLeft(const Point &p, const Line &l) {
-  	return sign(cross(l.b - l.a, p - l.a));
+    return sign(cross(l.b - l.a, p - l.a));
 }
 
 bool onSegment(const Point &p, const Segment &s) {
@@ -893,17 +893,17 @@ bool onSegment(const Point &p, const Segment &s) {
 }
 
 Point projection(const Point &p, const Line &l) {
-  	return l.a + (l.b - l.a) * dot(l.b - l.a, p - l.a) / norm(l.b - l.a);
+    return l.a + (l.b - l.a) * dot(l.b - l.a, p - l.a) / norm(l.b - l.a);
 }
 
 // 平行
 bool collinear(const Line &l1, const Line &l2) {
-	return sign(cross(l1.b - l1.a, l2.b - l2.a)) == 0 && sign(cross(l1.b - l1.a, l1.b - l2.a)) == 0;
+    return sign(cross(l1.b - l1.a, l2.b - l2.a)) == 0 && sign(cross(l1.b - l1.a, l1.b - l2.a)) == 0;
 }
 
 // 共线
 bool parallel(const Line &l1, const Line &l2) {
-  	return sign(cross(l1.a - l1.b, l2.a - l2.b)) == 0;
+    return sign(cross(l1.a - l1.b, l2.a - l2.b)) == 0;
 }
 
 bool intersect(const Line &l, const Segment &s) { 
@@ -912,94 +912,88 @@ bool intersect(const Line &l, const Segment &s) {
  
 
 bool intersect(const Line &l1, const Line &l2) {
-	return collinear(l1, l2) || !parallel(l1, l2);    
+    return collinear(l1, l2) || !parallel(l1, l2);    
 }
 
 // 两线段严格相交，不包含端点
 bool intersect(const Segment &l1, const Segment &l2) {
-  	if (onLeft(l2.a, l1) * onLeft(l2.b, l1) >= 0) {
+    if (onLeft(l2.a, l1) * onLeft(l2.b, l1) >= 0) {
     	return false;
-  	}
-  	if (onLeft(l1.a, l2) * onLeft(l1.b, l2) >= 0) {
+    }
+    if (onLeft(l1.a, l2) * onLeft(l1.b, l2) >= 0) {
     	return false;
-  	}
-  	return true;
+    }
+    return true;
 }
 
 // 非严格哪里交都算交
 bool intersect(const Segment &s1, const Segment &s2) {
-  	return onLeft(s2.a, s1) * onLeft(s2.b, s1) <= 0 && onLeft(s1.a, s2) * onLeft(s1.b, s2) <= 0;
+    return onLeft(s2.a, s1) * onLeft(s2.b, s1) <= 0 && onLeft(s1.a, s2) * onLeft(s1.b, s2) <= 0;
 }
 
 bool intersect(const Ray &l1, const Ray &l2) {
-  	int sgn = sign(cross(l1.b - l1.a, l2.b - l2.a));
-  	if (sgn == 0) {
+    int sgn = sign(cross(l1.b - l1.a, l2.b - l2.a));
+    if (sgn == 0) {
     	return false;
-  	}
-  	return onLeft(l1.a, l2) == sgn && onLeft(l2.a, l1) == -sgn;
+    }
+    return onLeft(l1.a, l2) == sgn && onLeft(l2.a, l1) == -sgn;
 }
 
 // 对称
 Point reflection(const Point &p, const Line &l) {
-  	return p + (projection(p, l) - p) * Real(2);
+    return p + (projection(p, l) - p) * Real(2);
 }
 
 // 三点求圆心 共圆
 Point circlecenter(const Point &a, const Point &b, const Point &c) {
-  	double a1 = b.x() - a.x(), b1 = b.y() - a.y(), c1 = (a1 * a1 + b1 * b1) / 2.0;
-  	double a2 = c.x() - a.x(), b2 = c.y() - a.y(), c2 = (a2 * a2 + b2 * b2) / 2.0;
-  	double d = a1 * b2 - a2 * b1;
-  	return Point(a.x() + (c1 * b2 - c2 * b1) / d, a.y() + (a1 * c2 - a2 * c1) / d);
+    double a1 = b.x() - a.x(), b1 = b.y() - a.y(), c1 = (a1 * a1 + b1 * b1) / 2.0;
+    double a2 = c.x() - a.x(), b2 = c.y() - a.y(), c2 = (a2 * a2 + b2 * b2) / 2.0;
+    double d = a1 * b2 - a2 * b1;
+    return Point(a.x() + (c1 * b2 - c2 * b1) / d, a.y() + (a1 * c2 - a2 * c1) / d);
 }
 
 Point cpoints(const Line &l, const Segment &s) {
-  	if (!intersect(l, s)) {
-        return {};
-    }
-  	return {s.a + (s.b - s.a) * cross(l.b - l.a, l.b - s.a) / cross(l.b - l.a, s.b - s.a)};
+    return {s.a + (s.b - s.a) * cross(l.b - l.a, l.b - s.a) / cross(l.b - l.a, s.b - s.a)};
 }
  
 Point cpoints(const Line &f, const Line &g) {
-  	if (parallel(f, g)) {
-        return {};
-    }
-  	return {g.a + (g.b - g.a) * cross(f.b - f.a, f.b - g.a) / cross(f.b - f.a, g.b - g.a)};
+    return {g.a + (g.b - g.a) * cross(f.b - f.a, f.b - g.a) / cross(f.b - f.a, g.b - g.a)};
 }
 
 vector<Point> cpoints(const Circle &c, const Line &l) {
-  	Point pr = projection(c.p, l);
-  	if (equal(abs(pr - c.p), c.r)) {
+    Point pr = projection(c.p, l);
+    if (equal(abs(pr - c.p), c.r)) {
         return {pr};
     }
-  	Point e = (l.b - l.a) / abs(l.b - l.a);
-  	Real k = sqrt(norm(c.r) - norm(pr - c.p));
-  	return {pr - e * k, pr + e * k};
+    Point e = (l.b - l.a) / abs(l.b - l.a);
+    Real k = sqrt(norm(c.r) - norm(pr - c.p));
+    return {pr - e * k, pr + e * k};
 }
  
 vector<Point> cpoints(const Circle &f, const Circle &g) {
-  	Real d = abs(f.p - g.p), r = f.r + g.r;
-  	if (sign(d - r) > 0 || sign(d + f.r - g.r) < 0 || sign(d + g.r - f.r) < 0) {
+    Real d = abs(f.p - g.p), r = f.r + g.r;
+    if (sign(d - r) > 0 || sign(d + f.r - g.r) < 0 || sign(d + g.r - f.r) < 0) {
         return {};
-	}
-  	Real a = acos((norm(f.r) - norm(g.r) + norm(d)) / (2 * f.r * d));
-  	Real t = arg(g.p - f.p);
-  	Point p = f.p + polar(f.r, t + a);
-  	Point q = f.p + polar(f.r, t - a);
-  	if (equal(p.x(), q.x()) && equal(p.y(), q.y())) {
+    }
+    Real a = acos((norm(f.r) - norm(g.r) + norm(d)) / (2 * f.r * d));
+    Real t = arg(g.p - f.p);
+    Point p = f.p + polar(f.r, t + a);
+    Point q = f.p + polar(f.r, t - a);
+    if (equal(p.x(), q.x()) && equal(p.y(), q.y())) {
     	return {p};
     }
-  	return {p, q};
+    return {p, q};
 }
 // IN : 1
 // OUT : -1
 // ON : 0
 int contains(const Circle &c, const Point &p) {
-  	int sgn = sign(abs(c.p - p) - c.r);
-  	return sgn <= -1 ? 1 : sgn >= 1 ? -1 : 0;
+    int sgn = sign(abs(c.p - p) - c.r);
+    return sgn <= -1 ? 1 : sgn >= 1 ? -1 : 0;
 }
 
 double angle(const Point &a, const Point &b) {
-  	return acos(dot(a, b) / (len(a) * len(b)));
+    return acos(dot(a, b) / (len(a) * len(b)));
 }
 
 // ON : -1, OUT : 0, IN : 1
@@ -1409,13 +1403,13 @@ Info operator+(const Info &a, const Info &b) {
 ```cpp
 template<typename T>
 struct ChthollyTree {
-  	map<int, T> mp;
-  	ChthollyTree() { mp[0] = 0; }
-  	inline void split(int x) {
-    	auto it = prev(mp.upper_bound(x));
+    map<int, T> mp;
+    ChthollyTree() { mp[0] = 0; }
+    inline void split(int x) {
+    auto it = prev(mp.upper_bound(x));
     	mp[x] = it->second;
-  	}
-  	void assign(int l, int r, T x) {
+    }
+    void assign(int l, int r, T x) {
     	split(l);
     	split(r + 1);
     	auto it = mp.find(l);
@@ -1423,8 +1417,8 @@ struct ChthollyTree {
       		it = mp.erase(it);
     	}
     	mp[l] = x;
-  	}  
-  	void add(int l, int r, T x) {
+    }  
+    void add(int l, int r, T x) {
     	split(l);
     	split(r + 1);
     	auto it = mp.find(l);
@@ -1432,34 +1426,34 @@ struct ChthollyTree {
       		it->second += x;
       		it = next(it);
     	}
-  	}
-  	T get(int l, int r, int x, int y) {
+    }
+    T get(int l, int r, int x, int y) {
     	i64 res = 0;
     	split(l);
     	split(r + 1);
     	auto it = mp.find(l);
     	while (it->first != r + 1) {
-      		res = (res + POW(it->second, x, y) * (next(it)->first - it->first) % y) % y;
-      		it = next(it);
+      	    res = (res + POW(it->second, x, y) * (next(it)->first - it->first) % y) % y;
+      	    it = next(it);
     	}
     	return res;
-  	}
-  	T nth_element(int l, int r, int k) {
+    }
+    T nth_element(int l, int r, int k) {
     	split(l);
     	split(r + 1);
     	auto it = mp.find(l);
     	vector<pair<T, T>> a;
     	while (it->first != r + 1) {
-      		a.push_back({it->second, next(it)->first - it->first});
-      		it = next(it);
+      	    a.push_back({it->second, next(it)->first - it->first});
+      	    it = next(it);
     	}
     	sort(a.begin(), a.end());
     	for (int i = 0, cnt = 0; ; i++) {
-      		if (k <= (cnt += a[i].second)) {
-        		return a[i].first;
-      		}
+      	    if (k <= (cnt += a[i].second)) {
+        	return a[i].first;
+      	    }
     	}
-  	}
+    }
 };
 ```
 
@@ -1469,17 +1463,17 @@ $n\equiv a_i(\mod r_i)$
 
 ```cpp
 i64 crt(const vector<i64> &a, const vector<int> &r) {
-  	i64 n = 1, ans = 0;
-  	int k = r.size();
-  	for (int i = 0; i < k; i++) {
+    i64 n = 1, ans = 0;
+    int k = r.size();
+    for (int i = 0; i < k; i++) {
     	n *= r[i];
-  	}
-  	for (int i = 0; i < k; i++) {
+    }
+    for (int i = 0; i < k; i++) {
     	i64 m = n / r[i], b, y;
     	exgcd(m, r[i], b, y);
     	ans = (ans + a[i] * m * b % n) % n;
-  	}
-  	return (ans % n + n) % n;
+    }
+    return (ans % n + n) % n;
 }
 ```
 
