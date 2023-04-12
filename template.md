@@ -1415,7 +1415,7 @@ struct ChthollyTree {
     	split(r + 1);
     	auto it = mp.find(l);
     	while (it->first != r + 1) {
-      		it = mp.erase(it);
+      	    it = mp.erase(it);
     	}
     	mp[l] = x;
     }  
@@ -1424,8 +1424,8 @@ struct ChthollyTree {
     	split(r + 1);
     	auto it = mp.find(l);
     	while (it->first != r + 1) {
-      		it->second += x;
-      		it = next(it);
+      	    it->second += x;
+      	    it = next(it);
     	}
     }
     T get(int l, int r, int x, int y) {
