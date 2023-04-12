@@ -661,7 +661,7 @@ auto del = [&](int pos) {
     
 };
 for (int i = 0; i < m; i++) {
-	auto &[ql, qr, qid] = q[i];
+   auto &[ql, qr, qid] = q[i];
     while (r < qr) add(++r);
     while (l > ql) add(--l);
     while (l < ql) del(l++);
