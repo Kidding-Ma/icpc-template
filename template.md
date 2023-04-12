@@ -1100,13 +1100,13 @@ _Find_next(pos) // 返回 pos 后面（下标严格大于 pos 的位置）第一
 bitset<N> vis;
 
 void Prime(int n) {
-  vis.set();
-  vis[0] = vis[1] = 0;
-  for (int i = 2; i * i <= n; i++) {
-    if (vis[i]) {
-      for (int j = i << 1; j <= n; j += i) vis[j] = 0;
+    vis.set();
+    vis[0] = vis[1] = 0;
+    for (int i = 2; i * i <= n; i++) {
+        if (vis[i]) {
+            for (int j = i << 1; j <= n; j += i) vis[j] = 0;
+        }
     }
-  }
 }
 ```
 
