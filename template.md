@@ -1537,7 +1537,7 @@ get(tree[l - 1], tree[r], 1, SIZE, k)
 
 ## 树上启发式合并
 
-$\text{totcnt}$ 表示子树中出现了多少种不同的颜色，$\text{res}$ 表示子树中出现次数等于出现最多颜色出现次数的颜色数
+$\text{totcnt}$ 表示子树中出现了多少种不同的颜色， $\text{res}$ 表示子树中出现次数等于出现最多颜色出现次数的颜色数
 ```cpp
 int ans = 0;
 i64 res = 0, mxc = 0, totcnt = 0;
