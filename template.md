@@ -1,4 +1,4 @@
-# ACM-ICPC 模板
+# icpc 模板
 
 ## CLion
 
