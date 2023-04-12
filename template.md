@@ -29,15 +29,15 @@ freopen("out.txt", "w", stdout);
 ```cpp
 i64 exgcd(i64 a, i64 b, i64 &x, i64 &y) {
     if (!b) {
-    	    x = 1;
-    	    y = 0;
-    	    return a;
-  	}
-  	i64 d = exgcd(b, a % b, x, y);
-  	i64 t = x;
-  	x = y;
-  	y = t - (a / b) * y;
-  	return d;
+    	x = 1;
+    	y = 0;
+    	return a;
+    }
+    i64 d = exgcd(b, a % b, x, y);
+    i64 t = x;
+    x = y;
+    y = t - (a / b) * y;
+    return d;
 }
 ```
 
@@ -255,12 +255,12 @@ struct SparseTable {
     vector<vector<T>> st;
     SparseTable(const vector<T> &a, const function<T(const T&, const T&)> &f) : n(a.size()), func(f), st(__lg(n) + 1, vector<T>(n)) {
         st[0] = a;
-	int lg = __lg(n);
-	for (int i = 1; i <= lg; i++) {
-	    for (int j = 0; j <= n - (1 << i); j++) {
-	        st[i][j] = func(st[i - 1][j], st[i - 1][(1 << (i - 1)) + j]);
-	    }
-	}  	    
+        int lg = __lg(n);
+        for (int i = 1; i <= lg; i++) {
+            for (int j = 0; j <= n - (1 << i); j++) {
+                st[i][j] = func(st[i - 1][j], st[i - 1][(1 << (i - 1)) + j]);
+            }
+        }  	    
     }
     T get(int l, int r) {// [l, r)
     	int lg = __lg(r - l);
