@@ -375,7 +375,7 @@ auto lca = [&](int x, int y) {
         swap(x, y);
     }
     for (int i = __lg(dep[x] - dep[y]); i >= 0; i--) {
-        if(depth[p[x][i]] >= depth[y]) {
+        if(dep[p[x][i]] >= dep[y]) {
             x = p[x][i];
         }
     }
