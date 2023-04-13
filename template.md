@@ -341,17 +341,17 @@ struct Trie {
 ## LCA
 
 ```cpp
-vector<int> depth(n + 1, 1);
+vector<int> dep(n + 1, 1);
 vector<vector<int>> p(n + 1, vector<int>(__lg(n + 1) + 1));
 vector<i64> sum(n + 1);
 function<void(int, int)> dfs = [&](int cur, int pre) {
     p[cur][0] = pre;
-    for (int i = 1; i <= __lg(depth[cur]); i++) {
+    for (int i = 1; i <= __lg(dep[cur]); i++) {
         p[cur][i] = p[p[cur][i - 1]][i - 1];
     }
     for (auto [nex, w] : g[cur]) {
         if (nex != pre) {
-            depth[nex] = depth[cur] + 1;
+            dep[nex] = dep[cur] + 1;
             sum[nex] = sum[cur] + w;
             dfs(nex, cur);
         }
@@ -371,10 +371,10 @@ auto get = [&](int u, int k) {
     return u;
 };
 auto lca = [&](int x, int y) {
-    if (depth[x] < depth[y]) {
+    if (dep[x] < dep[y]) {
         swap(x, y);
     }
-    for (int i = (int) __lg(depth[x] - depth[y]); i >= 0; i--) {
+    for (int i = __lg(dep[x] - dep[y]); i >= 0; i--) {
         if(depth[p[x][i]] >= depth[y]) {
             x = p[x][i];
         }
@@ -382,7 +382,7 @@ auto lca = [&](int x, int y) {
     if (x == y) {
         return x;
     }
-    for (int i = (int) __lg(depth[x]); i >= 0; i--) {
+    for (int i = __lg(dep[x]); i >= 0; i--) {
         if(p[x][i] != p[y][i]) {
             x = p[x][i];
             y = p[y][i];
