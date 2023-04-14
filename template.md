@@ -451,22 +451,22 @@ auto getroot = [&]() {
     mx[0] = 2E9;
     function<void(int, int)> dfs = [&](int cur, int pre) {
         sz[cur] = 1;
-    	mx[cur] = 0;
-    	for (auto nex : g[cur]) {
-      	    if (nex != pre) {
-				dfs(nex, cur);
-				sz[cur] += sz[nex];
- 				mx[cur] = max(mx[cur], sz[nex]);
-      	    }
-    	}
-    	mx[cur] = max(mx[cur], n - sz[cur]);
-    	if (mx[cur] == mx[root1]) {
-      	    root2 = cur;
-    	}
-    	if (mx[cur] < mx[root1]) {
-      	    root1 = cur;
-      	    root2 = 0;
-    	}
+        mx[cur] = 0;
+        for (auto nex : g[cur]) {
+            if (nex != pre) {
+                dfs(nex, cur);
+                sz[cur] += sz[nex];
+                mx[cur] = max(mx[cur], sz[nex]);
+            }
+        }
+        mx[cur] = max(mx[cur], n - sz[cur]);
+        if (mx[cur] == mx[root1]) {
+            root2 = cur;
+        }
+        if (mx[cur] < mx[root1]) {
+            root1 = cur;
+            root2 = 0;
+        }
     };
     dfs(1, 0);
     return (pair<int, int>){root1, root2};
