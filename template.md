@@ -709,13 +709,11 @@ using i128 = __int128;
 constexpr i64 N = 1E18;
  
 void print(i128 x) {
-    i64 num1 = x / N;
-    i64 num2 = x % N;
     if (x <= N) {
-    	cout << (i64) x;
+    	cout << i64(x);
     	return;
     }
-    cout << num1 << setw(18) << setfill('0') << num2;
+    cout << i64(x / N) << setw(18) << setfill('0') << i64(x % N);
 }
 ```
 
