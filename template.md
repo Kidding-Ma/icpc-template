@@ -918,13 +918,7 @@ bool intersect(const Line &l1, const Line &l2) {
 
 // 两线段严格相交，不包含端点
 bool intersect(const Segment &l1, const Segment &l2) {
-    if (onLeft(l2.a, l1) * onLeft(l2.b, l1) >= 0) {
-    	return false;
-    }
-    if (onLeft(l1.a, l2) * onLeft(l1.b, l2) >= 0) {
-    	return false;
-    }
-    return true;
+    return onLeft(l2.a, l1) * onLeft(l2.b, l1) < 0 && onLeft(l1.a, l2) * onLeft(l1.b, l2) > 0;
 }
 
 // 非严格哪里交都算交
@@ -1607,4 +1601,52 @@ function<void(int, int, bool)> dfs_again = [&](int cur, int pre, bool ok) {
 
 dfs(0, -1);
 dfs_again(0, -1, 0);
+```
+## zkwSegmentTree
+```cpp
+template<class Info,
+        class Merge = std::plus<Info>>
+struct SegmentTree {
+    const int n;
+    const Merge merge;
+    std::vector<Info> info;
+    int N;
+    SegmentTree(int n) : n(n), merge(Merge()) {
+        N = 1;
+        while (N < n) {
+            N <<= 1;
+        }
+        info.assign(2 * N, Info());
+    }
+    SegmentTree(std::vector<Info> &init) : SegmentTree(init.size()) {
+        for (int i = 0; i < n; i++) {
+            info[N + i] = init[i];
+        }
+        for (int i = N - 1; i; i--) {
+            pull(i);
+        }
+    }
+    void pull(int p) {
+        info[p] = merge(info[2 * p], info[2 * p + 1]);
+    }
+    void modify(int p, const Info &v) {
+        p += N;
+        info[p] = v;
+        for (int i = 1; (1 << i) <= N; i++) {
+            pull(p >> i);
+        }
+    }
+    Info rangeQuery(int l, int r) {
+        Info res = Info();
+        l += N;
+        r += N;
+        while (l < r) {
+            if (l & 1) res = merge(res, info[l++]);
+            if (r & 1) res = merge(info[--r], res);
+            l >>= 1;
+            r >>= 1;
+        }
+        return res;
+    }
+};
 ```
