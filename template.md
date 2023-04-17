@@ -64,6 +64,16 @@ struct Fenwick {
     T sum(int l, int r) { // [l, r)
         return get(r) - get(l);
     }
+    int kth(T k) {
+        int x = 0;
+        for (int i = 1 << __lg(n); i; i >>= 1) {
+            if (x + i <= n && k >= a[x + i - 1]) {
+                x += i;
+                k -= a[x - 1];
+            }
+        }
+        return x;
+    }
 };
 
 constexpr int inf = 1E9;
