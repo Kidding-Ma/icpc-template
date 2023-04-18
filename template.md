@@ -1658,3 +1658,69 @@ struct SegmentTree {
     }
 };
 ```
+## 表达式板子
+```cpp
+auto lv = [&](const char &ch) {
+    if (ch == '+') {
+        return 1;
+    }
+    return 2;
+};
+    
+int N = s.size();
+vector<i64> NUM;
+vector<char> OP;
+    
+auto work = [&]() {
+    char op = OP.back();
+    OP.pop_back();
+    auto r = NUM.back();
+    NUM.pop_back();
+    auto l = NUM.back();
+    NUM.pop_back();
+    if (op == '*') {
+        NUM.push_back(l * r);
+    }
+    if (op == '+') {
+        NUM.push_back(l + r);
+    }
+};
+    
+auto run = [&](string &s) {
+    for (int i = 0; i < N; ) {
+        if (s[i] == '&' || s[i] == '$') {
+            i++;
+            continue;
+        }
+        if (isdigit(s[i])) {
+            i64 res = 0;
+            for ( ; i < N && isdigit(s[i]); i++) {
+                res *= 10;
+                res += s[i] - '0';
+            }
+            NUM.push_back(res);
+        } else {
+            if (s[i] == '(') {
+                OP.push_back('(');
+            } else if (s[i] == ')') {
+                while (OP.back() != '(') {
+                    work();
+                }
+                OP.pop_back();
+            } else {
+                while (!OP.empty() && OP.back() != '(' && lv(OP.back()) >= lv(s[i])) {
+                    work();
+                }
+                OP.push_back(s[i]);
+            }
+            i++;
+        }
+    }
+    while (!OP.empty()) {
+        work();
+    }
+    i64 res = NUM.back();
+    NUM.pop_back();
+    return res;
+};
+```
