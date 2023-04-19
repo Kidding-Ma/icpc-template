@@ -1408,7 +1408,7 @@ template <typename T>
 struct ChthollyTree {
     map<int, T> mp;
     ChthollyTree() { mp[0] = 0; }
-    inline void split(int x) {
+    void split(int x) {
         auto it = prev(mp.upper_bound(x));
         mp[x] = it->second;
     }
