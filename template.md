@@ -1404,58 +1404,58 @@ Info operator+(const Info &a, const Info &b) {
 ## ChthollyTree
 
 ```cpp
-template<typename T>
+template <typename T> 
 struct ChthollyTree {
     map<int, T> mp;
     ChthollyTree() { mp[0] = 0; }
     inline void split(int x) {
-    auto it = prev(mp.upper_bound(x));
-    	mp[x] = it->second;
+        auto it = prev(mp.upper_bound(x));
+        mp[x] = it->second;
     }
     void assign(int l, int r, T x) {
-    	split(l);
-    	split(r + 1);
-    	auto it = mp.find(l);
-    	while (it->first != r + 1) {
-      	    it = mp.erase(it);
-    	}
-    	mp[l] = x;
-    }  
+        split(l);
+        split(r + 1);
+        auto it = mp.find(l);
+        while (it->first != r + 1) {
+        it = mp.erase(it);
+        }
+        mp[l] = x;
+    }
     void add(int l, int r, T x) {
-    	split(l);
-    	split(r + 1);
-    	auto it = mp.find(l);
-    	while (it->first != r + 1) {
-      	    it->second += x;
-      	    it = next(it);
-    	}
+        split(l);
+        split(r + 1);
+        auto it = mp.find(l);
+        while (it->first != r + 1) {
+            it->second += x;
+            it = next(it);
+        }
     }
     T get(int l, int r, int x, int y) {
-    	i64 res = 0;
-    	split(l);
-    	split(r + 1);
-    	auto it = mp.find(l);
-    	while (it->first != r + 1) {
-      	    res = (res + POW(it->second, x, y) * (next(it)->first - it->first) % y) % y;
-      	    it = next(it);
-    	}
-    	return res;
+        i64 res = 0;
+        split(l);
+        split(r + 1);
+        auto it = mp.find(l);
+        while (it->first != r + 1) {
+            res = (res + POW(it->second, x, y) * (next(it)->first - it->first) % y) % y;
+            it = next(it);
+        }
+        return res;
     }
     T nth_element(int l, int r, int k) {
-    	split(l);
-    	split(r + 1);
-    	auto it = mp.find(l);
-    	vector<pair<T, T>> a;
-    	while (it->first != r + 1) {
-      	    a.push_back({it->second, next(it)->first - it->first});
-      	    it = next(it);
-    	}
-    	sort(a.begin(), a.end());
-    	for (int i = 0, cnt = 0; ; i++) {
-      	    if (k <= (cnt += a[i].second)) {
-        	return a[i].first;
-      	    }
-    	}
+        split(l);
+        split(r + 1);
+        auto it = mp.find(l);
+        vector<pair<T, T>> a;
+        while (it->first != r + 1) {
+            a.push_back({it->second, next(it)->first - it->first});
+            it = next(it);
+        }
+        sort(a.begin(), a.end());
+        for (int i = 0, cnt = 0;; i++) {    
+            if (k <= (cnt += a[i].second)) {
+                return a[i].first;
+            }
+        }
     }
 };
 ```
