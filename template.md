@@ -1417,7 +1417,7 @@ struct ChthollyTree {
         split(r + 1);
         auto it = mp.find(l);
         while (it->first != r + 1) {
-        it = mp.erase(it);
+            it = mp.erase(it);
         }
         mp[l] = x;
     }
