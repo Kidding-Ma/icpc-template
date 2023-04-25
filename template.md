@@ -767,7 +767,7 @@ auto dijkstra = [&](int s, int t) {
 ```cpp
 auto bfs = [&](int s) {
     vector<int> dis(n, -1);
-    std::queue<int> q;
+    queue<int> q;
     q.push(s);
     dis[s] = 0;
 
@@ -783,7 +783,7 @@ auto bfs = [&](int s) {
         }
     }
 
-    return std::max_element(dis.begin(), dis.end()) - dis.begin();
+    return max_element(dis.begin(), dis.end()) - dis.begin();
 };
 int l = bfs(0);
 int r = bfs(l);
