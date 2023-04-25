@@ -772,12 +772,12 @@ auto bfs = [&](int s) {
     dis[s] = 0;
 
     while (!q.empty()) {
-        int x = q.front();
+        int cur = q.front();
         q.pop();
 
-        for (auto y : g[x]) {
-            if (dis[y] == -1) {
-                dis[y] = dis[x] + 1;
+        for (auto &nex : g[cur]) {
+            if (dis[nex] == -1) {
+                dis[nex] = dis[cur] + 1;
                 q.push(y);
             }
         }
