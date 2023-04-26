@@ -352,17 +352,17 @@ struct Trie {
 ## LCA
 
 ```cpp
-vector<int> dep(n + 1, 1);
+vector<int> dep(n + 1, 0);
 vector<vector<int>> p(n + 1, vector<int>(__lg(n + 1) + 1));
 vector<i64> sum(n + 1);
 function<void(int, int)> dfs = [&](int cur, int pre) {
     p[cur][0] = pre;
+    dep[cur] = dep[pre] + 1;
     for (int i = 1; i <= __lg(dep[cur]); i++) {
         p[cur][i] = p[p[cur][i - 1]][i - 1];
     }
     for (auto [nex, w] : g[cur]) {
         if (nex != pre) {
-            dep[nex] = dep[cur] + 1;
             sum[nex] = sum[cur] + w;
             dfs(nex, cur);
         }
