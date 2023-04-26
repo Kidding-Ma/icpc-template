@@ -872,9 +872,14 @@ Real area(const Point &a, const Point &b, const Point &c) {
     return abs(cross(b - a, c - a));
 }
 
+// 逆
 Point rotate(const Point &p, const double &rad) {
-    Point res = conj(p) * Point(sin(rad), cos(rad));
-    return Point(res.y(), res.x());
+    return p * Point(cos(rad), sin(rad));
+}
+
+// 顺
+Point rotate(const Point &p, const double &rad) {
+    return p * Point(cos(rad), -sin(rad));
 }
 
 Point rotate90(const Point &p) {
