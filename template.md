@@ -1,8 +1,8 @@
 # icpc 模板
 
-## CLion
+## $\text{CLion}$
 
-CmakeList.txt
+$\text{CmakeList.txt}$
 
 ```txt
 add_definitions(-O2)
@@ -11,20 +11,13 @@ add_executable(a a.cpp)
 add_executable(b b.cpp)
 ```
 
-## 生成随机数
+## $\text{random}$
 
 ```cpp
 mt19937 rng((unsigned int) chrono::steady_clock::now().time_since_epoch().count());
 ```
 
-## 文件操作
-
-```cpp
-freopen("in.txt", "r", stdin);
-freopen("out.txt", "w", stdout);
-```
-
-## Exgcd
+## $\text{exgcd}$
 
 ```cpp
 i64 exgcd(i64 a, i64 b, i64 &x, i64 &y) {
@@ -41,7 +34,7 @@ i64 exgcd(i64 a, i64 b, i64 &x, i64 &y) {
 }
 ```
 
-## Fenwick
+## $\text{fenwick}$
 
 ```cpp
 template <typename T>
@@ -88,7 +81,7 @@ struct Min {
 };
 ```
 
-## StringHash
+## $\text{StringHash}$
 
 ```cpp
 constexpr int p[2] = {223333333, 773333333};
@@ -122,7 +115,7 @@ void init() {
 }
 ```
 
-## Pollard_rho
+## $\text{pollard_rho}$
 
 ```cpp
 using i128 = __int128;
@@ -238,7 +231,7 @@ void getfac(i64 x) {
 }
 ```
 
-## Set
+## $\text{Set}$
 
 ```cpp
 #include "ext/pb_ds/assoc_container.hpp"
@@ -255,7 +248,7 @@ cout << s.order_of_key(1) << '\n'; // 找 1 是第几个元素
 cout << *s.find_by_order(0) << '\n'; // 括号里是几就找第几个元素，注意这里是迭代器记得加星星号
 ```
 
-## SparseTable
+## $\text{SparseTable}$
 
 ```cpp
 template <typename T>
@@ -280,7 +273,7 @@ struct SparseTable {
 };
 ```
 
-## UnionFind
+## $\text{UnionFind}$
 
 ```cpp
 struct UnionFind {
@@ -309,7 +302,7 @@ struct UnionFind {
 };
 ```
 
-## Trie
+## $\text{Trie}$
 
 ```cpp
 template <typename T>
@@ -349,7 +342,7 @@ struct Trie {
 };
 ```
 
-## LCA
+## $\text{lca}$
 
 ```cpp
 vector<int> dep(n + 1, 0);
@@ -407,7 +400,8 @@ auto dis = [&](int x, int y) {
 };
 ```
 
-## Sieve
+
+## $\text{sieve}$
 
 ```cpp
 vector<int> isprime;
@@ -453,7 +447,9 @@ vector<int> get(int x) {
 }
 ```
 
-## 树的双重心
+## $\text{Graphs}$
+
+树的重心
 
 ```cpp
 auto getroot = [&]() {
@@ -484,7 +480,51 @@ auto getroot = [&]() {
 };
 ```
 
-## TreeHash
+树深子树和
+```cpp
+vector<vector<int>> g(n);
+vector<int> dep(n, 1), cnt(n);
+function<void(int, int)> dfs = [&](int cur, int pre) {
+    cnt[cur]++;
+    for (auto &nex : g[cur]) {
+    	if (x != pre) {
+            dep[nex] = dep[cur] + 1;
+            dfs(nex, cur);
+            cnt[cur] += cnt[nex];
+      	}
+    }
+};
+dfs(0, -1);
+```
+
+树的直径
+
+```cpp
+auto bfs = [&](int s) {
+    vector<int> dis(n, -1);
+    queue<int> q;
+    q.push(s);
+    dis[s] = 0;
+
+    while (!q.empty()) {
+        int cur = q.front();
+        q.pop();
+
+        for (auto &nex : g[cur]) {
+            if (dis[nex] == -1) {
+                dis[nex] = dis[cur] + 1;
+                q.push(y);
+            }
+        }
+    }
+
+    return max_element(dis.begin(), dis.end()) - dis.begin();
+};
+int l = bfs(0);
+int r = bfs(l);
+```
+
+## $\text{TreeHash}$
 
 ```cpp
 constexpr int p[2] = {223333333, 773333333};
@@ -520,7 +560,9 @@ auto TreeHash = [&](int root) {
 };     
 ```
 
-## 组合数
+## $\text{combination}$
+
+组合数
 
 ```cpp
 template <typename T, typename U> 
@@ -637,7 +679,9 @@ mint C(int n, int m) {
 }
 ```
 
-## 莫队
+## $\text{mo's algorithm}$
+
+莫队
 
 ```cpp
 int n, m;
@@ -684,25 +728,7 @@ for (int i = 0; i < m; i++) {
 }
 ```
 
-## 树深子树和
-
-```cpp
-vector<vector<int>> g(n);
-vector<int> dep(n, 1), cnt(n);
-function<void(int, int)> dfs = [&](int cur, int pre) {
-    cnt[cur]++;
-    for (auto &nex : g[cur]) {
-    	if (x != pre) {
-            dep[nex] = dep[cur] + 1;
-            dfs(nex, cur);
-            cnt[cur] += cnt[nex];
-      	}
-    }
-};
-dfs(0, -1);
-```
-
-## __int128
+## $\text{__int128}$
 
 ```cpp
 using i128 = __int128;
@@ -718,21 +744,22 @@ void print(i128 x) {
 }
 ```
 
-## Python_Input
+## $\text{Python}$
+$\text{str 别用，最后多两个字符。}$
 
 ```cpp
 import sys
 input = sys.stdin.buffer.readline
 ```
 
-## Unordered_map
+## $\text{unordered_map}$
 
 ```cpp
 unordered_map<int, int> mp(1024);
 mp.max_load_factor(0.25);
 ```
 
-## Dijkstra 
+## $\text{dijkstra}$
 
 ```cpp
 auto dijkstra = [&](int s, int t) {
@@ -762,34 +789,8 @@ auto dijkstra = [&](int s, int t) {
 };
 ```
 
-## 树的直径
 
-```cpp
-auto bfs = [&](int s) {
-    vector<int> dis(n, -1);
-    queue<int> q;
-    q.push(s);
-    dis[s] = 0;
-
-    while (!q.empty()) {
-        int cur = q.front();
-        q.pop();
-
-        for (auto &nex : g[cur]) {
-            if (dis[nex] == -1) {
-                dis[nex] = dis[cur] + 1;
-                q.push(y);
-            }
-        }
-    }
-
-    return max_element(dis.begin(), dis.end()) - dis.begin();
-};
-int l = bfs(0);
-int r = bfs(l);
-```
-
-## KMP
+## $\text{kmp}$
 
 循环节
 
@@ -811,7 +812,9 @@ if (n - nex[n] > 0 && (n % (n - nex[n]) == 0)) {
 }
 ```
 
-## 计算几何
+## $\text{Geometry}$
+
+计算几何
 
 ```cpp
 const double Pi = acos(-1.0);
@@ -1077,7 +1080,7 @@ vector<Point> get(const vector<Point> &a) {
 }
 ```
 
-## Bitset
+## $\text{Bitset}$
 
 ```cpp
 bitset() // 每一位都是 false。
@@ -1103,7 +1106,7 @@ _Find_first() // 返回 bitset 第一个 true 的下标，若没有 true 则返�
 _Find_next(pos) // 返回 pos 后面（下标严格大于 pos 的位置）第一个 true 的下标，若 pos 后面没有 true 则返回 bitset 的大小。
 ```
 
-优化埃氏筛
+$\text{优化埃氏筛}$
 
 ```cpp
 bitset<N> vis;
@@ -1118,8 +1121,8 @@ void Prime(int n) {
     }
 }
 ```
-
-## 最大字段和
+## $\text{SegmentTree}$
+最大字段和
 
 ```cpp
 template<class Info,
@@ -1194,7 +1197,7 @@ Info operator+(const Info &a, const Info &b) {
 }
 ```
 
-## LazySegmentTree
+## $\text{LazySegmentTree}$
 
 区间修改，区间求和
 
@@ -1301,7 +1304,7 @@ Max operator+(const Max &a, const Max &b) {
 }
 ```
 
-## 区间求和
+区间求和
 
 ```cpp
 template<class Info, class Tag>
@@ -1407,7 +1410,7 @@ Info operator+(const Info &a, const Info &b) {
 }
 ```
 
-## ChthollyTree
+## $\text{ChthollyTree}$
 
 ```cpp
 template <typename T> 
@@ -1466,7 +1469,7 @@ struct ChthollyTree {
 };
 ```
 
-## Crt
+## $\text{crt}$
 
 $n\equiv a_i(\mod r_i)$
 
@@ -1486,7 +1489,10 @@ i64 crt(const vector<i64> &a, const vector<int> &r) {
 }
 ```
 
-## 主席树
+## $\text{PersistentSegmentTree}$
+
+主席树
+
 ```cpp
 struct node {
     node *l, *r;
@@ -1542,8 +1548,9 @@ for (int i = 0; i < n; i++) {
 get(tree[l - 1], tree[r], 1, SIZE, k)
 ```
 
+## $\text{dsu on tree}$
 
-## 树上启发式合并
+树上启发式合并
 
 $\text{totcnt}$ 表示子树中出现了多少种不同的颜色， $\text{res}$ 表示子树中出现次数等于出现最多颜色出现次数的颜色数
 ```cpp
@@ -1616,7 +1623,7 @@ function<void(int, int, bool)> dfs_again = [&](int cur, int pre, bool ok) {
 dfs(0, -1);
 dfs_again(0, -1, 0);
 ```
-## zkwSegmentTree
+## $\text{zkwSegmentTree}$
 ```cpp
 template<class Info,
         class Merge = std::plus<Info>>
@@ -1664,7 +1671,10 @@ struct SegmentTree {
     }
 };
 ```
-## 表达式板子
+## $\text{Expression}$
+
+表达式
+
 ```cpp
 auto lv = [&](const char &ch) {
     if (ch == '+') {
