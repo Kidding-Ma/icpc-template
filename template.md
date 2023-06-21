@@ -120,7 +120,7 @@ struct StringHash {
 };
 ```
 
-## $\text{pollard_rho}$
+## $\text{pollard rho}$
 
 ```cpp
 using i128 = __int128;
